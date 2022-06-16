@@ -1,13 +1,13 @@
-import java.util.LinkedList;
+//import java.util.LinkedList;
 
-public class LinkedListDeque <T>{
-    public int size;
+public class LinkedListDeque <T> {
+        private int size;
     public class IntNode {
         public IntNode prev;
         public T items;
         public IntNode next;
 
-        public IntNode(IntNode p,items i, IntNode n) {
+        public IntNode(IntNode p,T i, IntNode n) {
             prev=p;
             items = i;
             next = n;
@@ -15,24 +15,24 @@ public class LinkedListDeque <T>{
     }
     private IntNode sentinel;
 
-    public LinkedListDeque {
-        sentinel = new IntNode(null, 63,null);
+    public LinkedListDeque() {
+        sentinel = new IntNode(null, null,null);
         sentinel.next = sentinel;
         sentinel.prev = sentinel;
 
-        size =0;
+        size = 0;
 
     }
-    public void addFirst(T items){
+    public void addFirst(T items) {
         IntNode newFirst=new IntNode(sentinel,items,sentinel.next);
         sentinel.next.prev=newFirst;
         sentinel.next=newFirst;
 
 
-        size+=1;
+        size +=1;
 
     }
-    public void addlast (T items){
+    public void addLast (T items){
 
         IntNode newLast = new IntNode(sentinel.prev, items, sentinel);
         sentinel.prev.next = newLast;
@@ -44,20 +44,23 @@ public class LinkedListDeque <T>{
     public boolean isEmpty(){
         return size==0;
     }
-    public T removeFirst(){
-        if (size==0){
-            return 'null';
+    public T removeFirst() {
+        if (size == 0) {
+            return null;
         }
-        sentinel.next=sentinel.next.next;
-        sentinel.next.prev=sentinel;
-        size-=1;
+        sentinel.next = sentinel.next.next;
+        sentinel.next.prev = sentinel;
+        size -= 1;
         return sentinel.next.items;
 
 
     }
+    public int size(){
+        return size;
+    }
     public T removeLast(){
         if (size==0){
-            return 'null';
+            return null;
         }
         sentinel.prev=sentinel.prev.prev;
         sentinel.prev.next=sentinel;
@@ -70,7 +73,7 @@ public class LinkedListDeque <T>{
     public T get(int index){
         IntNode getitems=sentinel;
         if (size==0){
-            return 'null';
+            return null;
         }
         for (int i=0;i<=index;i++){
             getitems=getitems.next;
@@ -78,26 +81,26 @@ public class LinkedListDeque <T>{
         }
         return getitems.items;
     }
-    public T getRecursive(int index){
-        /*get the #index intnode*/
-        public IntNode getnode(index) {
-            if (index==0){
-                return sentinel.next;
-            }
-            return getnode(index-1).next;
+    /*public T getRecursive(int index) {
+        /*get the #index intnode
+        public IntNode getnode (index) {
+        if (index == 0) {
+            return sentinel.next;
+        }
+        return getnode(index - 1).next;
         }
 
-        if(size==0 ||index>size){
-            return'null';
+        if (size == 0 || index > size) {
+            return null;
         }
 
 
         return getnode(index).items;
 
 
-    }
+    }*/
     public void printDeque(){
-        IntNode printIntnode=sentinel.next;
+        IntNode printIntnode = sentinel.next;
         while(printIntnode.next!=sentinel.prev){
             System.out.print(printIntnode.items);
             printIntnode=printIntnode.next;
