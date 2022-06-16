@@ -101,11 +101,11 @@ public class LinkedListDeque <T> {
     }*/
     public void printDeque(){
         IntNode printIntnode = sentinel.next;
-        while(printIntnode.next!=sentinel.prev){
-            System.out.print(printIntnode.items);
+        while(printIntnode.next!=sentinel){
+            System.out.print( printIntnode.items + " ");
             printIntnode=printIntnode.next;
         }
-        System.out.println(printIntnode.items);
+        System.out.println( printIntnode.items);
     }
         
 

@@ -4,17 +4,23 @@ public class ArrayDeque<T> {
     public int size;
     public int nextFirst;
     public int nextLast;
-    public double R=size/ items.length;
+    public double R;
     public ArrayDeque() {
         items = (T []) new Object[8];
         size = 0;
-        nextFirst = 1;
+        nextFirst = 2;
         nextLast = 3;
+        R= size/ items.length;
     }
     private void resize(int capacity) {
         T[] a =  (T[])new Object [capacity];
         if(nextFirst<nextLast && 0<size && size< items.length){
+            /*System.out.println("testout here");
+            System.out.println(items[2]);
+            System.out.println(nextFirst);
+            System.out.println(size);*/
             System.arraycopy(items, nextFirst+1, a, 0, size);
+
 
 
 
@@ -33,7 +39,10 @@ public class ArrayDeque<T> {
             System.arraycopy(items, nextFirst + 1, a, 0, items.length - 1 - nextFirst);
             System.arraycopy(items, 0, a, items.length - 1 - nextFirst, nextLast);
         }
+
         items = a;
+
+
         nextFirst= items.length-1;
         nextLast=size;
     }
@@ -42,26 +51,39 @@ public class ArrayDeque<T> {
         if (size == items.length) {
             resize(size * 2);
         }
+        items[nextFirst] = item;
+
+        size+=1;
 
 
 
         if (nextFirst==0) {
+
+
             nextFirst= items.length-1;
         }
 
-        else { nextFirst-=1;}
-        items[nextFirst] = item;
+        else
+
+        nextFirst-=1;
+
     }
     public void addLast(T item) {
-        if (nextLast == items.length) {
+        if (size == items.length) {
             resize(size * 2);
         }
 
-
+        size+=1;
         items[nextLast] = item;
+
+
+
         if (nextLast== items.length-1) { nextLast=0;}
 
-        else nextLast+=1;
+        else
+            nextLast+=1;
+
+
     }
     public boolean isEmpty(){
         if (size==0){
@@ -147,7 +169,7 @@ public class ArrayDeque<T> {
         if (size<= index ){
             return null;
         } else if (nextFirst== items.length-1) {
-            return items[index-1];
+            return items[index];
 
         }
 
