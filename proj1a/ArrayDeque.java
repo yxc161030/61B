@@ -5,6 +5,7 @@ public class ArrayDeque<T> {
     public int nextFirst;
     public int nextLast;
     public double R;
+
     public ArrayDeque() {
         items = (T []) new Object[8];
         size = 0;
