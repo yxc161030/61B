@@ -48,10 +48,11 @@ public class LinkedListDeque <T> {
         if (size == 0) {
             return null;
         }
+        T returnitems=sentinel.next.items;
         sentinel.next = sentinel.next.next;
         sentinel.next.prev = sentinel;
         size -= 1;
-        return sentinel.next.items;
+        return returnitems;
 
 
     }
@@ -62,11 +63,12 @@ public class LinkedListDeque <T> {
         if (size==0){
             return null;
         }
+        T returnitems=sentinel.prev.items
         sentinel.prev=sentinel.prev.prev;
         sentinel.prev.next=sentinel;
         size-=1;
 
-        return sentinel.prev.items;
+        return returnitems;
 
 
     }
