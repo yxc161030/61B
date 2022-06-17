@@ -72,7 +72,7 @@ public class LinkedListDeque <T> {
     }
     public T get(int index){
         IntNode getitems=sentinel;
-        if (size==0){
+        if (size==0||size<=index){
             return null;
         }
         for (int i=0;i<=index;i++){
@@ -81,24 +81,31 @@ public class LinkedListDeque <T> {
         }
         return getitems.items;
     }
-    /*public T getRecursive(int index) {
-        /*get the #index intnode
-        public IntNode getnode (index) {
+
+
+
+
+    public T getnode(int index, IntNode a){
+
         if (index == 0) {
-            return sentinel.next;
-        }
-        return getnode(index - 1).next;
+            return a.items;
         }
 
-        if (size == 0 || index > size) {
+        return getnode(index-1,a.next);
+
+    }
+    public T getRecursive(int index) {
+        /*get the #index intnode*/
+
+
+        if (size == 0 || index >= size) {
             return null;
         }
+        IntNode a=sentinel.next;
 
 
-        return getnode(index).items;
-
-
-    }*/
+        return getnode(index, a);
+    }
     public void printDeque(){
         IntNode printIntnode = sentinel.next;
         while(printIntnode.next!=sentinel){
