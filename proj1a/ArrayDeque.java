@@ -31,7 +31,7 @@ public class ArrayDeque<T> {
             System.arraycopy(items, nextFirst+1, a, 0, items.length-1-nextFirst);
             System.arraycopy(items, 0, a, items.length-1-nextFirst, nextLast);
         }*/
-        else if (nextFirst== items.length-1) {
+        else if (size>0&&nextFirst== items.length-1) {
             System.arraycopy(items, 0, a, 0, size);
 
         }
@@ -177,11 +177,11 @@ public class ArrayDeque<T> {
         /*else if (nextFirst<nextLast && 0< size < items.length ) {
             return items.[nextFirst+index];
         }*/
-        else if ((nextFirst+index)< items.length){
-            return items[nextFirst+index];
+        else if ((nextFirst+index+1)< items.length){
+            return items[nextFirst+index+1];
         }
         else {
-            return items[nextFirst + index- items.length];
+            return items[nextFirst + index+1- items.length];
         }
     }
 
