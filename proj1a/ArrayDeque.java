@@ -18,10 +18,6 @@ public class ArrayDeque<T> {
         if (items.length - nextFirst > size)
            /* if(nextFirst<nextLast && 0<size && size< items.length)*/
             {
-            /*System.out.println("testout here");
-            System.out.println(items[2]);
-            System.out.println(nextFirst);
-            System.out.println(size);*/
             System.arraycopy(items, nextFirst+1, a, 0, size);
 
 
@@ -106,7 +102,7 @@ public class ArrayDeque<T> {
             items[items.length-1]= null;
             nextLast= items.length-1;
             size -= 1;
-            if (R<0.25){
+            if (R<0.25&size>0){
                 resize(size*2);
             }
             return returnItem;
@@ -117,7 +113,7 @@ public class ArrayDeque<T> {
             items[nextLast-1]= null ;
             nextLast=nextLast-1;
             size -= 1;
-            if (R<0.25){
+            if (R<0.25&&size>0){
                 resize(size*2);
             }
             return returnItem;
