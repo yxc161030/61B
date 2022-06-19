@@ -11,7 +11,7 @@ public class ArrayDeque<T> {
         size = 0;
         nextFirst = 2;
         nextLast = 3;
-        //R= size/ items.length;
+        R= size/ items.length;
     }
     private void resize(int capacity) {
         T[] a =  (T[])new Object [capacity];
@@ -104,7 +104,8 @@ public class ArrayDeque<T> {
             items[items.length-1]= null;
             nextLast= items.length-1;
             size -= 1;
-            if (size*4<items.length&&size>=8){
+            double c = (double) size / items.length;
+            if (c<0.25&&size>=8){
                 resize(size*2);
             }
             return returnItem;
@@ -115,7 +116,11 @@ public class ArrayDeque<T> {
             items[nextLast-1]= null ;
             nextLast=nextLast-1;
             size -= 1;
-            if (size*4<items.length&&size>=8){
+            double c = (double) size / items.length;
+            //System.out.println("resize c " + c);
+            //System.out.println("resize size " + size);
+            //System.out.println("resize length " + items.length);
+            if (c < 0.25&&size>=8){
                 resize(size*2);
             }
             return returnItem;
@@ -143,7 +148,8 @@ public class ArrayDeque<T> {
             items[0] = null;
             nextFirst = 0;
             size -= 1;
-            if (items.length>4*size &&size>=8){
+            double c = (double) size / items.length;
+            if (c<0.25 &&size>=8){
                 resize(size*2);
             }
             return returnItem;
@@ -154,7 +160,8 @@ public class ArrayDeque<T> {
             items[nextFirst + 1] = null;
             nextFirst = nextFirst + 1;
             size -= 1;
-            if (items.length>4*size &&size>=8){
+            double c = (double) size / items.length;
+            if (c<0.25 &&size>=8){
                 resize(size*2);
             }
             return returnItem;
