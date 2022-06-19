@@ -34,11 +34,8 @@ public class ArrayDeque<T> {
                 System.arraycopy(items, nextFirst + 1, a, 0, items.length - 1 - nextFirst);
                 System.arraycopy(items, 0, a, items.length - 1 - nextFirst, nextLast);
             }
-        }
 
         items = a;
-
-
         nextFirst= items.length-1;
         nextLast=size;
     }
