@@ -1,122 +1,183 @@
 public class ArrayDeque<T> {
-    private T[] items;
-    private int size;
-    private int nextFirst;
-    private int nextLast;
+
+    public T[] items ;
+    public int size;
+    public int nextFirst;
+    public int nextLast;
+    public double R;
+
     public ArrayDeque() {
-        items = (T[]) new Object[8];
+        items = (T []) new Object[8];
         size = 0;
-        nextFirst = 3;
-        nextLast = 4;
+        nextFirst = 2;
+        nextLast = 3;
+        R= size/ items.length;
     }
     private void resize(int capacity) {
-        T[] newitems = (T[]) new Object[capacity];
-        if (items.length - nextFirst > size) {
-            System.arraycopy(items, nextFirst + 1, newitems, 0, size);
-        } else {
-            if (nextFirst + 1 == items.length) {
-                System.arraycopy(items, 0, newitems, 0, size);
-            } else {
-                System.arraycopy(items, nextFirst + 1, newitems, 0, items.length - nextFirst - 1);
-                System.arraycopy(items, 0, newitems, items.length - nextFirst - 1, nextLast);
-            }
+        T[] a =  (T[])new Object [capacity];
+        if (items.length - nextFirst > size)
+            /* if(nextFirst<nextLast && 0<size && size< items.length)*/
+        {
+            System.arraycopy(items, nextFirst+1, a, 0, size);
+
+
         }
-        items = newitems;
-        nextFirst = items.length - 1;
-        nextLast = size;
+        /*if (nextFirst>nextLast && size< items.length ){
+            System.arraycopy(items, nextFirst+1, a, 0, items.length-1-nextFirst);
+            System.arraycopy(items, 0, a, items.length-1-nextFirst, nextLast);
+        }*/
+        else if (size>0&&nextFirst== items.length-1) {
+            System.arraycopy(items, 0, a, 0, size);
+
+        }
+
+        else {
+            System.arraycopy(items, nextFirst + 1, a, 0, items.length - 1 - nextFirst);
+            System.arraycopy(items, 0, a, items.length - 1 - nextFirst, nextLast);
+        }
+
+        items = a;
+
+
+        nextFirst= items.length-1;
+        nextLast=size;
     }
+
     public void addFirst(T item) {
-        if (size == items.length) {
-            resize(2 * size);
+        if (size == items.length&&size>=8) {
+            resize(size * 2);
         }
-        if (nextFirst == 0) {
-            items[nextFirst] = item;
-            nextFirst = items.length - 1;
-        } else {
-            items[nextFirst] = item;
-            nextFirst -= 1;
+        items[nextFirst] = item;
+
+        size+=1;
+
+
+
+        if (nextFirst==0) {
+
+
+            nextFirst= items.length-1;
         }
-        size += 1;
+
+        else {
+            nextFirst-=1;
+        }
+
     }
     public void addLast(T item) {
-        if (size == items.length) {
-            resize(2 * size);
+        if (size == items.length&&size>=8) {
+            resize(size * 2);
         }
-        if (nextLast == (items.length - 1)) {
-            items[nextLast] = item;
-            nextLast = 0;
-        } else {
-            items[nextLast] = item;
-            nextLast += 1;
+
+        size+=1;
+        items[nextLast] = item;
+
+
+
+        if (nextLast== items.length-1) { nextLast=0;}
+
+        else{
+            nextLast+=1;}
+
+
+    }
+    public boolean isEmpty(){
+        if (size==0){
+            return true;
         }
-        size += 1;
+        else {
+            return false;
+        }
     }
-    public boolean isEmpty() {
-        return size == 0;
-    }
-    public int size() {
+    public int size(){
         return size;
     }
-    public void printDeque() {
-        resize(size);
+    public T removeLast() {
+
+        if (size==0){
+            return null;
+        }
+        else if(nextLast==0){
+            T returnItem = items[items.length-1];
+            items[items.length-1]= null;
+            nextLast= items.length-1;
+            size -= 1;
+            if (R<0.25&&size>=8){
+                resize(size*2);
+            }
+            return returnItem;
+
+        }
+        else{
+            T returnItem = items[nextLast-1];
+            items[nextLast-1]= null ;
+            nextLast=nextLast-1;
+            size -= 1;
+            if (R<0.25&&size>=8){
+                resize(size*2);
+            }
+            return returnItem;
+
+        }
+
+
+    }
+
+    public void printDeque(){
+        resize(size*2);
         for (int i = 0; i < size; i++) {
             System.out.print(items[i] + " ");
         }
     }
+
+
     public T removeFirst() {
-        T returnvalue;
         if (size == 0) {
             return null;
-        } else if (nextFirst == items.length - 1) {
-            returnvalue = items[0];
+        }
+
+        else if (nextFirst == items.length - 1) {
+            T returnItem = items[0];
             items[0] = null;
             nextFirst = 0;
             size -= 1;
-            if (items.length > 4 * size && size >= 8) {
-                resize(2 * size);
+            if (items.length>4*size &&size>=8){
+                resize(size*2);
             }
-            return returnvalue;
-        } else {
-            returnvalue = items[nextFirst + 1];
+            return returnItem;
+
+        }
+        else {
+            T returnItem = items[nextFirst + 1];
             items[nextFirst + 1] = null;
-            nextFirst += 1;
+            nextFirst = nextFirst + 1;
             size -= 1;
-            if (items.length > 4 * size && size >= 8) {
-                resize(2 * size);
+            if (items.length>4*size &&size>=8){
+                resize(size*2);
             }
-            return returnvalue;
+            return returnItem;
+
+
         }
     }
-    public T removeLast() {
-        T returnvalue;
-        if (size == 0) {
+
+    public T  get(int index){
+        if (size<= index ){
             return null;
-        } else if (nextLast == 0) {
-            returnvalue = items[items.length - 1];
-            items[items.length - 1] = null;
-            nextLast = items.length - 1;
-            size -= 1;
-            if (items.length > 4 * size && size >= 8) {
-                resize(2 * size);
-            }
-            return returnvalue;
-        } else {
-            returnvalue = items[nextLast - 1];
-            items[nextLast - 1] = null;
-            nextLast -= 1;
-            size -= 1;
-            if (items.length > 4 * size && size >= 8) {
-                resize(2 * size);
-            }
-            return returnvalue;
+        } else if (nextFirst== items.length-1) {
+            return items[index];
+
         }
-    }
-    public T get(int index) {
-        if (size == 0 || (index + 1 > size)) {
-            return null;
+
+        /*else if (nextFirst<nextLast && 0< size < items.length ) {
+            return items.[nextFirst+index];
+        }*/
+        else if ((nextFirst+index+1)< items.length){
+            return items[nextFirst+index+1];
         }
-        resize(size * 2);
-        return items[index];
+        else {
+            return items[nextFirst + index+1- items.length];
+        }
     }
 
 }
